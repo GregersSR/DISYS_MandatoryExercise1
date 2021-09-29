@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "example.com/mandatoryassignment2";
+
+package assignemnt2;
+
+service Course {
+    rpc findCourse (CourseRequest) returns (CourseReply) {}
+}
+
+// The request message containing the user's name.
+message CourseRequest {
+    int64 id = 1;
+}
+
+message CourseReply {
+    int64 message = 1;
+}  
