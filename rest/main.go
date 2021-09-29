@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gregerssr/DISYS_MandatoryExercise1/api"
+	"github.com/gregerssr/DISYS_MandatoryExercise1/rest/api"
 )
 
 func main() {
