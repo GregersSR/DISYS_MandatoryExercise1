@@ -1,4 +1,4 @@
-package gRPC
+package gRPCAPI
 
 type Course struct {
 	ID                int64
