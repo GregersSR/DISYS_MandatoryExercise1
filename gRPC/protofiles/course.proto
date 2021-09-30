@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/gregerssr/DISYS_MandatoryExercise1/gRPC";
+option go_package = "github.com/gregerssr/DISYS_MandatoryExercise1/gRPC/protofiles";
 
 package assignemnt2;
 
