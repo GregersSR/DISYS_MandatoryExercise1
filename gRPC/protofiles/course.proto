@@ -4,14 +4,75 @@ option go_package = "github.com/gregerssr/DISYS_MandatoryExercise1/gRPC/protofil
 
 package assignemnt2;
 
-service Course {
-    rpc FindCourse (CourseRequest) returns (CourseReply) {}
+message Course {
+    int64 id = 1;
+    string title = 2;
+    repeated int64 teachers = 3;
+    int64 ects = 4;
+    int64 satisfaction_score = 5;
 }
 
-message CourseRequest {
+service CourseService {
+    rpc AddCourse (Course) returns (IsSuccess);
+    rpc GetCourse (CourseID) returns (Course);
+    rpc UpdateCourse (Course) returns (IsSuccess); 
+    rpc DeleteCourse (CourseID) returns (IsSuccess);
+    rpc GetCourseTeachers (CourseID) returns (CourseTeachers);
+    rpc GetCourseSatisfactionRating (CourseID) returns (CourseSatisfactionRating);
+}
+
+message CourseID {
     int64 id = 1;
 }
 
-message CourseReply {
-    string name = 1; 
-}  
+message IsSuccess {
+    bool isSuccess = 1;
+}
+
+message CourseTeachers {
+    repeated int64 teachers = 1;
+}
+
+message CourseSatisfactionRating {
+    int64 satisfactionRating = 1;
+}
+
+// message AddCourseRequest {
+//     Course course = 1;
+// }
+
+// message AddCourseReply {
+//     bool success = 1;
+// }
+
+// message GetCourseRequest {
+//     int64 id = 1;
+// }
+
+// message GetCourseReply {
+//     Course course = 1;
+// }
+
+// message UpdateCourseRequest {
+//     Course course = 1;
+// }
+
+// message UpdateCourseReply {
+//     bool success = 1;
+// }
+
+// message DeleteCourseRequest {
+//     int64 id = 1;
+// }
+
+// message DeleteCourseReply {
+//     bool success = 1;
+// }
+
+// message GetCourseTeachersRequest {
+//     int64 id = 1;
+// }
+
+// message GetCourseTeachersReply {
+//     repeated int64 teachers = 1;
+// }
