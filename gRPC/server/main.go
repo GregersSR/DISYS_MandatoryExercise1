@@ -1,27 +1,29 @@
-package gRPC
+package main
 
 import (
 	"context"
 	"log"
 	"net"
 
+	"github.com/gregerssr/DISYS_MandatoryExercise1/gRPC/api"
+	pf "github.com/gregerssr/DISYS_MandatoryExercise1/gRPC/protofiles"
 	"google.golang.org/grpc"
 )
 
 // Must implement the CourseServer interface
 type Server struct {
-	UnimplementedCourseServer
+	pf.UnimplementedCourseServer
 
-	Repo Repo
+	Repo api.Repo
 }
 
 const (
 	port = ":50051"
 )
 
-func (s *Server) FindCourse(ctx context.Context, in *CourseRequest) (*CourseReply, error) {
+func (s *Server) FindCourse(ctx context.Context, in *pf.CourseRequest) (*pf.CourseReply, error) {
 	log.Printf("Recieved %v", in.GetId())
-	return &CourseReply{Name: s.Repo.FindCourse(in.GetId()).Title}, nil
+	return &pf.CourseReply{Name: s.Repo.FindCourse(in.GetId()).Title}, nil
 }
 
 func main() {
@@ -30,7 +32,7 @@ func main() {
 		log.Fatalf("Failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	RegisterCourseServer(s, &Server{})
+	pf.RegisterCourseServer(s, &Server{})
 	log.Printf("server listening at %v", lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
