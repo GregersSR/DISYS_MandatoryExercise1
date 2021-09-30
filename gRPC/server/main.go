@@ -21,6 +21,10 @@ type Server struct {
 	pf.UnimplementedCourseServiceServer
 }
 
+func (s *Server) Init() {
+	s.Courses = make(map[int64]pf.Course)
+}
+
 func (s *Server) AddCourse(ctx context.Context, in *pf.Course) (*pf.IsSuccess, error) {
 	log.Printf("Recived AddCourse request for %v: %s", in.Id, in.Title)
 
@@ -28,13 +32,20 @@ func (s *Server) AddCourse(ctx context.Context, in *pf.Course) (*pf.IsSuccess, e
 		return &pf.IsSuccess{IsSuccess: false}, fmt.Errorf("%v already exists under the name %s", in.Id, in.Title)
 	}
 
+	s.Courses[in.Id] = *in
 	return &pf.IsSuccess{IsSuccess: true}, nil
 }
 
 func (s *Server) GetCourse(ctx context.Context, in *pf.CourseID) (*pf.Course, error) {
 	log.Printf("Recieved GetCourse request for %v", in.Id)
 
-	course := s.Courses[in.Id]
+	course := pf.Course{
+		Id:                s.Courses[in.Id].Id,
+		Title:             s.Courses[in.Id].Title,
+		Teachers:          s.Courses[in.Id].Teachers,
+		Ects:              s.Courses[in.Id].Ects,
+		SatisfactionScore: s.Courses[in.Id].SatisfactionScore,
+	}
 
 	return &course, nil
 }
@@ -46,6 +57,7 @@ func (s *Server) UpdateCourse(ctx context.Context, in *pf.Course) (*pf.IsSuccess
 		return &pf.IsSuccess{IsSuccess: false}, fmt.Errorf("%v does not exist. Please add it", in.Id)
 	}
 
+	s.Courses[in.Id] = *in
 	return &pf.IsSuccess{IsSuccess: true}, nil
 }
 
@@ -90,6 +102,7 @@ func main() {
 	s := grpc.NewServer()
 
 	courseServer := Server{}
+	courseServer.Init()
 
 	pf.RegisterCourseServiceServer(s, &courseServer)
 	log.Printf("server listening at %v", lis.Addr())
