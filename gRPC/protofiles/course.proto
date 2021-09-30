@@ -1,18 +1,17 @@
 syntax = "proto3";
 
-option go_package = "example.com/mandatoryassignment2";
+option go_package = "github.com/gregerssr/DISYS_MandatoryExercise1/gRPC";
 
 package assignemnt2;
 
 service Course {
-    rpc findCourse (CourseRequest) returns (CourseReply) {}
+    rpc FindCourse (CourseRequest) returns (CourseReply) {}
 }
 
-// The request message containing the user's name.
 message CourseRequest {
     int64 id = 1;
 }
 
 message CourseReply {
-    int64 message = 1;
+    string name = 1; 
 }  
