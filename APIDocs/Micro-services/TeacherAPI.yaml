@@ -1,0 +1,109 @@
+swagger: "2.0"
+info:
+  description: "A micro-service approach"
+  version: "0.1"
+  title: "Mandatory Assignment 1"
+paths:
+  /teacher:
+    post:
+      tags:
+        - "teacher"
+      summary: "Add a new teacher to the system"
+      operationId: "addTeacher"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Teacher"
+      responses:
+        "405":
+          description: "Invalid input"
+  /teacher/{teacher_id}:
+    get:
+      tags:
+        - "teacher"
+      summary: "Find teacher by ID"
+      description: "Returns a single teacher"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "teacher_id"
+          in: "path"
+          description: "ID of teacher to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "400":
+            description: "Invalid ID supplied"
+        "200":
+          description: "success"
+          schema:
+            $ref: "#/definitions/Teacher"
+    put:
+      tags:
+        - "teacher"
+      summary: "Update an existing teacher"
+      operationId: "updateTeacher"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+        - name: "teacher_id"
+          in: "path"
+          description: "ID of teacher to return"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "body"
+          description: "The modified teacher object"
+          required: true
+          schema:
+            $ref: "#/definitions/Teacher"
+      responses:
+        "404":
+          description: "Teacher not found"
+    delete:
+      tags:
+      - "teacher"
+      summary: "Deletes a teacher"
+      operationId: "deleteTeacher"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "teacher_id"
+        in: "path"
+        description: "Teacher ID to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Teacher not found"
+definitions:
+  Teacher:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      popularity_rating:
+        type: "integer"
+    
