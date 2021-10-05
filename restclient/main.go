@@ -52,6 +52,22 @@ func main() {
 		fmt.Println(body2)
 	}
 
+	fmt.Println("Teachers of course 2:")
+	body3, err := getBody(baseurl + "/2/teachers")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(body3)
+	}
+
+	fmt.Println("Satisfaction score of course 2:")
+	body4, err := getBody(baseurl + "/2/satisfaction_rating")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(body4)
+	}
+
 	// Let's clean up
 	fmt.Println("Deleting course with ID 1")
 	resp4, err := doJSONRequest(baseurl+"/1", "DELETE", map[string]interface{}{})
