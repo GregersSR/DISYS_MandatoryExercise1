@@ -67,6 +67,13 @@ func main() {
 	} else {
 		fmt.Println(resp5.Status)
 	}
+	fmt.Println("Attepting delete of non-existing course with ID 3")
+	resp6, err := doJSONRequest(baseurl+"/3", "DELETE", map[string]interface{}{})
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(resp6.Status)
+	}
 
 }
 
@@ -118,7 +125,6 @@ func doJSONRequest(url string, method string, dataToSend map[string]interface{})
 	}
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(asJSON))
 	req.Header.Set("content-type", "application/json")
-	fmt.Println(*req)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
